@@ -146,242 +146,123 @@
          <spel:text>?</spel:text>\r
       </spel:CheckTextsRequest>\r
    </soapenv:Body>\r
-</soapenv:Envelope>]]></con:request><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:wsaConfig mustUnderstand="NONE" version="200508" action="http://speller.yandex.net/services/spellservice/checkTexts"/></con:call></con:operation></con:interface><con:testSuite id="f2174d2b-dff6-4c05-8495-2c0d81b46d40" name="CheckTextTestSuite"><con:settings/><con:runType>SEQUENTIAL</con:runType><con:testCase id="59ed7952-c2f1-494f-9e21-ddebbf06ba58" failOnError="true" failTestCaseOnErrors="true" keepSession="false" maxResults="0" name="NumbersTestCase" searchProperties="true"><con:settings/><con:testStep type="groovy" name="setUp" id="7930c07a-133d-4941-ae73-99a6742d80c8"><con:settings/><con:config><script>String[] testArray = ["12345", "hello123", "123hello"]
+</soapenv:Envelope>]]></con:request><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:wsaConfig mustUnderstand="NONE" version="200508" action="http://speller.yandex.net/services/spellservice/checkTexts"/></con:call></con:operation></con:interface><con:testSuite id="f2174d2b-dff6-4c05-8495-2c0d81b46d40" name="CheckTextTestSuite"><con:settings/><con:runType>SEQUENTIAL</con:runType><con:testCase id="59ed7952-c2f1-494f-9e21-ddebbf06ba58" failOnError="true" failTestCaseOnErrors="false" keepSession="false" maxResults="0" name="NumbersTestCase" searchProperties="true" timeout="0" wsrmEnabled="false" wsrmVersion="1.0" wsrmAckTo="" amfAuthorisation="false" amfEndpoint="" amfLogin="" amfPassword=""><con:settings/><con:testStep type="groovy" name="setTestData" id="7930c07a-133d-4941-ae73-99a6742d80c8"><con:settings/><con:config><script>String[] testArray = ["12345", "hello123", "123hello"]
 Integer arraySize = new Integer( testArray.size())
-testRunner.testCase.testSuite.project.setPropertyValue("arraySize", arraySize.toString())
-Integer counter = new Integer(testRunner.testCase.testSuite.project.getPropertyValue("counter"))
+testRunner.testCase.setPropertyValue("arraySize", arraySize.toString())
+Integer counter = new Integer(testRunner.testCase.getPropertyValue("counter"))
 
-testRunner.testCase.testSuite.project.setPropertyValue("testText", testArray[counter]) 
-
-/*
-Integer iteration = new Integer(testRunner.testCase.testSuite.project.getPropertyValue( "counter" ));
-Integer iterationsCount = new Integer(testRunner.testCase.testSuite.project.getPropertyValue( "arraySize" ));
-
-//String [] expectedVals = new String [iterationsCount];
-String [] inputVals = new String[iterationsCount]
-
-inputVals[0]			= "te1231xt'" ;
-//expectedVals[0] 	= "";
-
-inputVals[1]			= "ice1231d" ;
-//expectedVals[1] 	= "";
-
-inputVals[2]			= "'wor123dss" ;
-//expectedVals[2] 	= "";
-
-
-testRunner.testCase.testSuite.project.setPropertyValue( 'testText', inputVals[iteration - 1]);
-*/
-
-</script></con:config></con:testStep><con:testStep type="request" id="3be7c56c-f991-47c3-a480-28c3e820870e" name="checkText"><con:settings/><con:config xsi:type="con:RequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:interface>SpellServiceSoap</con:interface><con:operation>checkText</con:operation><con:request name="checkText" id="8bb25a35-c9a4-46af-be12-360a811e47e3"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:encoding>UTF-8</con:encoding><con:endpoint>http://speller.yandex.net/services/spellservice</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:spel="http://speller.yandex.net/services/spellservice">\r
+if(counter >= arraySize) 
+{
+	testRunner.gotoStepByName("nextStep")
+} else
+{
+testRunner.testCase.setPropertyValue("testText", testArray[counter]) 
+}</script></con:config></con:testStep><con:testStep type="request" id="3be7c56c-f991-47c3-a480-28c3e820870e" name="checkText"><con:settings/><con:config xsi:type="con:RequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:interface>SpellServiceSoap</con:interface><con:operation>checkText</con:operation><con:request name="checkText" id="8bb25a35-c9a4-46af-be12-360a811e47e3"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:encoding>UTF-8</con:encoding><con:endpoint>http://speller.yandex.net/services/spellservice</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:spel="http://speller.yandex.net/services/spellservice">\r
    <soapenv:Header/>\r
    <soapenv:Body>\r
       <spel:CheckTextRequest lang="${#Project#lang}" options="0" format="">\r
-         <spel:text>${#Project#testText}</spel:text>\r
+         <spel:text>${#TestCase#testText}</spel:text>\r
       </spel:CheckTextRequest>\r
    </soapenv:Body>\r
-</soapenv:Envelope>]]></con:request><con:assertion type="Valid HTTP Status Codes" id="906afc08-6ee6-403e-863f-6abe7ff10283" name="Valid HTTP Status Codes"><con:configuration><codes>200</codes></con:configuration></con:assertion><con:assertion type="SOAP Fault Assertion" id="35424c65-c852-46b2-84b6-d04b2e4c63c2" name="Not SOAP Fault"/><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig action="http://speller.yandex.net/services/spellservice/checkText" mustUnderstand="NONE" version="200508"/><con:wsrmConfig version="1.2"/></con:request></con:config></con:testStep><con:testStep type="groovy" name="tearDown" id="8ba8b3e9-fab9-41d6-b8a7-ee55ebba4956"><con:settings/><con:config><script>Integer arraySize = new Integer( testRunner.testCase.testSuite.project.getPropertyValue("arraySize"))
-Integer counter = new Integer(testRunner.testCase.testSuite.project.getPropertyValue("counter"))
+</soapenv:Envelope>]]></con:request><con:assertion type="Valid HTTP Status Codes" id="906afc08-6ee6-403e-863f-6abe7ff10283" name="Valid HTTP Status Codes"><con:configuration><codes>${#Project#statusCode}</codes></con:configuration></con:assertion><con:assertion type="SOAP Fault Assertion" id="35424c65-c852-46b2-84b6-d04b2e4c63c2" name="Not SOAP Fault"/><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig action="http://speller.yandex.net/services/spellservice/checkText" mustUnderstand="NONE" version="200508"/><con:wsrmConfig version="1.2"/></con:request></con:config></con:testStep><con:testStep type="groovy" name="nextStep" id="8ba8b3e9-fab9-41d6-b8a7-ee55ebba4956"><con:settings/><con:config><script>Integer arraySize = new Integer( testRunner.testCase.getPropertyValue("arraySize"))
+Integer counter = new Integer(testRunner.testCase.getPropertyValue("counter"))
 
 if (counter &lt; arraySize)
 {
 	counter += 1
-	testRunner.testCase.testSuite.project.setPropertyValue("counter", counter.toString())
-	testRunner.gotoStepByName("setUp")
-} else
-{
-	testRunner.testCase.testSuite.project.setPropertyValue("counter", new Integer(0).toString())
-} 
-
-/*
-Integer iteration = new Integer(testRunner.testCase.testSuite.project.getPropertyValue( "counter" ));
-Integer iterationsCount = new Integer(testRunner.testCase.testSuite.project.getPropertyValue( "arraySize" ));
-
-if (iteration &lt;= iterationsCount - 1)
-{
-	iteration += 1
-	testRunner.testCase.testSuite.project.setPropertyValue("counter", iteration.toString())
-	testRunner.gotoStepByName( "Set test data")
-} */</script></con:config></con:testStep><con:properties/></con:testCase><con:testCase id="31e7d5a0-8fc8-4c02-b941-946fc31d9e5f" failOnError="true" failTestCaseOnErrors="true" keepSession="false" maxResults="0" name="EmptyStringTestCase" searchProperties="true"><con:settings/><con:testStep type="request" name="checkText" id="5f6b236c-1ac9-48b4-a3e2-3807da428b57"><con:settings/><con:config xsi:type="con:RequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:interface>SpellServiceSoap</con:interface><con:operation>checkText</con:operation><con:request name="checkText" id="2ba2b371-b9b3-47c7-9942-095e56b7e0b9"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:encoding>UTF-8</con:encoding><con:endpoint>http://speller.yandex.net/services/spellservice</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:spel="http://speller.yandex.net/services/spellservice">\r
+	testRunner.testCase.setPropertyValue("counter", counter.toString())
+	testRunner.gotoStepByName("setTestData")
+} </script></con:config></con:testStep><con:setupScript>testRunner.testCase.setPropertyValue("counter", "0") </con:setupScript><con:tearDownScript>testRunner.testCase.setPropertyValue("counter", "0") </con:tearDownScript><con:properties><con:property><con:name>testText</con:name><con:value>123hello</con:value></con:property><con:property><con:name>counter</con:name><con:value>0</con:value></con:property><con:property><con:name>arraySize</con:name><con:value>3</con:value></con:property></con:properties></con:testCase><con:testCase id="31e7d5a0-8fc8-4c02-b941-946fc31d9e5f" failOnError="true" failTestCaseOnErrors="true" keepSession="false" maxResults="0" name="EmptyStringTestCase" searchProperties="true" timeout="0" wsrmEnabled="false" wsrmVersion="1.0" wsrmAckTo="" amfAuthorisation="false" amfEndpoint="" amfLogin="" amfPassword=""><con:settings/><con:testStep type="request" name="checkText" id="5f6b236c-1ac9-48b4-a3e2-3807da428b57"><con:settings/><con:config xsi:type="con:RequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:interface>SpellServiceSoap</con:interface><con:operation>checkText</con:operation><con:request name="checkText" id="2ba2b371-b9b3-47c7-9942-095e56b7e0b9"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:encoding>UTF-8</con:encoding><con:endpoint>http://speller.yandex.net/services/spellservice</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:spel="http://speller.yandex.net/services/spellservice">\r
    <soapenv:Header/>\r
    <soapenv:Body>\r
       <spel:CheckTextRequest>\r
          <spel:text></spel:text>\r
       </spel:CheckTextRequest>\r
    </soapenv:Body>\r
-</soapenv:Envelope>]]></con:request><con:assertion type="Simple NotContains" id="2122f667-cc45-4342-ac77-27855f291d79" name="Not Contains"><con:configuration><token>&lt;word></token><ignoreCase>false</ignoreCase><useRegEx>false</useRegEx></con:configuration></con:assertion><con:assertion type="Valid HTTP Status Codes" id="ee551d85-b758-4857-930c-c1d4eda4d8d6" name="Valid HTTP Status Codes"><con:configuration><codes>200</codes></con:configuration></con:assertion><con:assertion type="SOAP Fault Assertion" id="1e20ba46-218e-48a5-b544-4161fe5bebae" name="Not SOAP Fault"/><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig mustUnderstand="NONE" version="200508"/><con:wsrmConfig version="1.2"/></con:request></con:config></con:testStep><con:properties/></con:testCase><con:testCase id="14b7a3ef-6703-4685-bf11-df247edf24b0" failOnError="true" failTestCaseOnErrors="true" keepSession="false" maxResults="0" name="CorrectWordTestCase" searchProperties="true"><con:settings/><con:testStep type="groovy" name="setUp" id="48cc8996-a90b-47e8-93f3-2904869b7314"><con:settings/><con:config><script>String[] testArray = ["window", "forest", "Peter"]
+</soapenv:Envelope>]]></con:request><con:assertion type="Simple NotContains" id="2122f667-cc45-4342-ac77-27855f291d79" name="Not Contains"><con:configuration><token>&lt;word></token><ignoreCase>false</ignoreCase><useRegEx>false</useRegEx></con:configuration></con:assertion><con:assertion type="Valid HTTP Status Codes" id="ee551d85-b758-4857-930c-c1d4eda4d8d6" name="Valid HTTP Status Codes"><con:configuration><codes>${#Project#statusCode}</codes></con:configuration></con:assertion><con:assertion type="SOAP Fault Assertion" id="1e20ba46-218e-48a5-b544-4161fe5bebae" name="Not SOAP Fault"/><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig mustUnderstand="NONE" version="200508"/><con:wsrmConfig version="1.2"/></con:request></con:config></con:testStep><con:properties/></con:testCase><con:testCase id="14b7a3ef-6703-4685-bf11-df247edf24b0" failOnError="true" failTestCaseOnErrors="true" keepSession="false" maxResults="0" name="CorrectWordTestCase" searchProperties="true" timeout="0" wsrmEnabled="false" wsrmVersion="1.0" wsrmAckTo="" amfAuthorisation="false" amfEndpoint="" amfLogin="" amfPassword=""><con:settings/><con:testStep type="groovy" name="setTestData" id="48cc8996-a90b-47e8-93f3-2904869b7314"><con:settings/><con:config><script>String[] testArray = ["window", "forest", "Peter"]
 Integer arraySize = new Integer( testArray.size())
-testRunner.testCase.testSuite.project.setPropertyValue("arraySize", arraySize.toString())
-Integer counter = new Integer(testRunner.testCase.testSuite.project.getPropertyValue("counter"))
+testRunner.testCase.setPropertyValue("arraySize", arraySize.toString())
+Integer counter = new Integer(testRunner.testCase.getPropertyValue("counter"))
 
-testRunner.testCase.testSuite.project.setPropertyValue("testText", testArray[counter]) 
-
-/*
-Integer iteration = new Integer(testRunner.testCase.testSuite.project.getPropertyValue( "counter" ));
-Integer iterationsCount = new Integer(testRunner.testCase.testSuite.project.getPropertyValue( "arraySize" ));
-
-//String [] expectedVals = new String [iterationsCount];
-String [] inputVals = new String[iterationsCount]
-
-inputVals[0]			= "te1231xt'" ;
-//expectedVals[0] 	= "";
-
-inputVals[1]			= "ice1231d" ;
-//expectedVals[1] 	= "";
-
-inputVals[2]			= "'wor123dss" ;
-//expectedVals[2] 	= "";
-
-
-testRunner.testCase.testSuite.project.setPropertyValue( 'testText', inputVals[iteration - 1]);
-*/
-
-</script></con:config></con:testStep><con:testStep type="request" name="checkText" id="4bfc91c4-b1eb-4251-bad1-8a8500d1e30f"><con:settings/><con:config xsi:type="con:RequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:interface>SpellServiceSoap</con:interface><con:operation>checkText</con:operation><con:request name="checkText" id="4d66da80-32e7-4f55-adf4-7fd34836dcc8"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:encoding>UTF-8</con:encoding><con:endpoint>http://speller.yandex.net/services/spellservice</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:spel="http://speller.yandex.net/services/spellservice">
+if(counter >= arraySize) 
+{
+	testRunner.gotoStepByName("nextStep")
+} else
+{
+testRunner.testCase.setPropertyValue("testText", testArray[counter]) 
+}</script></con:config></con:testStep><con:testStep type="request" name="checkText" id="4bfc91c4-b1eb-4251-bad1-8a8500d1e30f"><con:settings/><con:config xsi:type="con:RequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:interface>SpellServiceSoap</con:interface><con:operation>checkText</con:operation><con:request name="checkText" id="4d66da80-32e7-4f55-adf4-7fd34836dcc8"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:encoding>UTF-8</con:encoding><con:endpoint>http://speller.yandex.net/services/spellservice</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:spel="http://speller.yandex.net/services/spellservice">
    <soapenv:Header/>
    <soapenv:Body>
       <spel:CheckTextRequest lang="${#Project#lang}" options="0" format="">
-         <spel:text>${#Project#testText}</spel:text>
+         <spel:text>${#TestCase#testText}</spel:text>
       </spel:CheckTextRequest>
    </soapenv:Body>
-</soapenv:Envelope>]]></con:request><con:assertion type="SOAP Response" id="f36b59e5-eb2f-45c0-b282-06fa08a895b7"/><con:assertion type="Simple NotContains" id="dcfd44dd-1e57-43e7-99d6-9c5db649fd3e" name="Not Contains"><con:configuration><token>&lt;word></token><ignoreCase>false</ignoreCase><useRegEx>false</useRegEx></con:configuration></con:assertion><con:assertion type="Valid HTTP Status Codes" id="f415cc15-938c-480a-964d-ca1c152005aa" name="Valid HTTP Status Codes"><con:configuration><codes>200</codes></con:configuration></con:assertion><con:assertion type="SOAP Fault Assertion" id="81a7456e-6021-4ff9-b2d1-65df9ead531c" name="Not SOAP Fault"/><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig mustUnderstand="NONE" version="200508"/><con:wsrmConfig version="1.2"/></con:request></con:config></con:testStep><con:testStep type="groovy" name="tearDown" id="d77f30a3-d45c-450e-aa9f-4fa1eab6e7f6"><con:settings/><con:config><script>Integer arraySize = new Integer( testRunner.testCase.testSuite.project.getPropertyValue("arraySize"))
-Integer counter = new Integer(testRunner.testCase.testSuite.project.getPropertyValue("counter"))
+</soapenv:Envelope>]]></con:request><con:assertion type="SOAP Response" id="f36b59e5-eb2f-45c0-b282-06fa08a895b7"/><con:assertion type="Simple NotContains" id="dcfd44dd-1e57-43e7-99d6-9c5db649fd3e" name="Not Contains"><con:configuration><token>&lt;word></token><ignoreCase>false</ignoreCase><useRegEx>false</useRegEx></con:configuration></con:assertion><con:assertion type="Valid HTTP Status Codes" id="f415cc15-938c-480a-964d-ca1c152005aa" name="Valid HTTP Status Codes"><con:configuration><codes>${#Project#statusCode}</codes></con:configuration></con:assertion><con:assertion type="SOAP Fault Assertion" id="81a7456e-6021-4ff9-b2d1-65df9ead531c" name="Not SOAP Fault"/><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig mustUnderstand="NONE" version="200508"/><con:wsrmConfig version="1.2"/></con:request></con:config></con:testStep><con:testStep type="groovy" name="nextStep" id="d77f30a3-d45c-450e-aa9f-4fa1eab6e7f6"><con:settings/><con:config><script>Integer arraySize = new Integer( testRunner.testCase.getPropertyValue("arraySize"))
+Integer counter = new Integer(testRunner.testCase.getPropertyValue("counter"))
 
 if (counter &lt; arraySize)
 {
 	counter += 1
-	testRunner.testCase.testSuite.project.setPropertyValue("counter", counter.toString())
-	testRunner.gotoStepByName("setUp")
-} else
-{
-	testRunner.testCase.testSuite.project.setPropertyValue("counter", new Integer(0).toString())
-} 
-
-/*
-Integer iteration = new Integer(testRunner.testCase.testSuite.project.getPropertyValue( "counter" ));
-Integer iterationsCount = new Integer(testRunner.testCase.testSuite.project.getPropertyValue( "arraySize" ));
-
-if (iteration &lt;= iterationsCount - 1)
-{
-	iteration += 1
-	testRunner.testCase.testSuite.project.setPropertyValue("counter", iteration.toString())
-	testRunner.gotoStepByName( "Set test data")
-} */</script></con:config></con:testStep><con:properties/></con:testCase><con:testCase id="1cd2e67d-61e3-4758-862b-8fffd4226c1a" failOnError="true" failTestCaseOnErrors="true" keepSession="false" maxResults="0" name="IncorrectWordTestCase" searchProperties="true"><con:settings/><con:testStep type="groovy" name="setUp" id="6796a11a-cf3c-4ad6-ac9a-0952da299149"><con:settings/><con:config><script>String[] testArray = ["weendow", "forrest", "catcat",  "rusia"]
+	testRunner.testCase.setPropertyValue("counter", counter.toString())
+	testRunner.gotoStepByName("setTestData")
+} </script></con:config></con:testStep><con:setupScript>testRunner.testCase.setPropertyValue("counter", "0") </con:setupScript><con:tearDownScript>testRunner.testCase.setPropertyValue("counter", "0") </con:tearDownScript><con:properties><con:property><con:name>counter</con:name><con:value>0</con:value></con:property><con:property><con:name>arraySize</con:name><con:value>3</con:value></con:property><con:property><con:name>testText</con:name><con:value>Peter</con:value></con:property></con:properties></con:testCase><con:testCase id="1cd2e67d-61e3-4758-862b-8fffd4226c1a" failOnError="true" failTestCaseOnErrors="true" keepSession="false" maxResults="0" name="IncorrectWordTestCase" searchProperties="true" timeout="0" wsrmEnabled="false" wsrmVersion="1.0" wsrmAckTo="" amfAuthorisation="false" amfEndpoint="" amfLogin="" amfPassword=""><con:settings/><con:testStep type="groovy" name="setTestData" id="6796a11a-cf3c-4ad6-ac9a-0952da299149"><con:settings/><con:config><script>String[] testArray = ["weendow", "forrest", "catcat",  "rusia"]
 String[] expectedArray = ["window", "forest", "cat cat", "Russia"]
 Integer arraySize = new Integer( testArray.size())
-testRunner.testCase.testSuite.project.setPropertyValue("arraySize", arraySize.toString())
-Integer counter = new Integer(testRunner.testCase.testSuite.project.getPropertyValue("counter"))
+testRunner.testCase.setPropertyValue("arraySize", arraySize.toString())
+Integer counter = new Integer(testRunner.testCase.getPropertyValue("counter"))
 
-testRunner.testCase.testSuite.project.setPropertyValue("testText", testArray[counter]) 
-testRunner.testCase.testSuite.project.setPropertyValue("expectedText", expectedArray[counter]) 
-/*
-Integer iteration = new Integer(testRunner.testCase.testSuite.project.getPropertyValue( "counter" ));
-Integer iterationsCount = new Integer(testRunner.testCase.testSuite.project.getPropertyValue( "arraySize" ));
-
-//String [] expectedVals = new String [iterationsCount];
-String [] inputVals = new String[iterationsCount]
-
-inputVals[0]			= "te1231xt'" ;
-//expectedVals[0] 	= "";
-
-inputVals[1]			= "ice1231d" ;
-//expectedVals[1] 	= "";
-
-inputVals[2]			= "'wor123dss" ;
-//expectedVals[2] 	= "";
-
-
-testRunner.testCase.testSuite.project.setPropertyValue( 'testText', inputVals[iteration - 1]);
-*/
-
-</script></con:config></con:testStep><con:testStep type="request" name="checkText" id="d98a6a7a-fb41-4cde-a43e-7d1fc3c15b9f"><con:settings/><con:config xsi:type="con:RequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:interface>SpellServiceSoap</con:interface><con:operation>checkText</con:operation><con:request name="checkText" id="4d66da80-32e7-4f55-adf4-7fd34836dcc8"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:encoding>UTF-8</con:encoding><con:endpoint>http://speller.yandex.net/services/spellservice</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:spel="http://speller.yandex.net/services/spellservice">
+if(counter >= arraySize) 
+{
+	testRunner.gotoStepByName("nextStep")
+} else
+{
+testRunner.testCase.setPropertyValue("testText", testArray[counter]) 
+testRunner.testCase.setPropertyValue("expectedText", expectedArray[counter]) 
+}</script></con:config></con:testStep><con:testStep type="request" name="checkText" id="d98a6a7a-fb41-4cde-a43e-7d1fc3c15b9f"><con:settings/><con:config xsi:type="con:RequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:interface>SpellServiceSoap</con:interface><con:operation>checkText</con:operation><con:request name="checkText" id="4d66da80-32e7-4f55-adf4-7fd34836dcc8"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:encoding>UTF-8</con:encoding><con:endpoint>http://speller.yandex.net/services/spellservice</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:spel="http://speller.yandex.net/services/spellservice">
    <soapenv:Header/>
    <soapenv:Body>
       <spel:CheckTextRequest lang="${#Project#lang}" options="0" format="">
-         <spel:text>${#Project#testText}</spel:text>
+         <spel:text>${#TestCase#testText}</spel:text>
       </spel:CheckTextRequest>
    </soapenv:Body>
-</soapenv:Envelope>]]></con:request><con:assertion type="SOAP Response" id="f36b59e5-eb2f-45c0-b282-06fa08a895b7"/><con:assertion type="Valid HTTP Status Codes" id="f415cc15-938c-480a-964d-ca1c152005aa" name="Valid HTTP Status Codes"><con:configuration><codes>200</codes></con:configuration></con:assertion><con:assertion type="SOAP Fault Assertion" id="81a7456e-6021-4ff9-b2d1-65df9ead531c" name="Not SOAP Fault"/><con:assertion type="Simple Contains" id="eafe4d18-4095-46d7-be89-eaffd790475f" name="Contains"><con:configuration><token>${#Project#expectedText}</token><ignoreCase>false</ignoreCase><useRegEx>false</useRegEx></con:configuration></con:assertion><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig mustUnderstand="NONE" version="200508"/><con:wsrmConfig version="1.2"/></con:request></con:config></con:testStep><con:testStep type="groovy" name="tearDown" id="cc22628d-b427-4004-96bc-a4bbeb303f0d"><con:settings/><con:config><script>Integer arraySize = new Integer( testRunner.testCase.testSuite.project.getPropertyValue("arraySize"))
-Integer counter = new Integer(testRunner.testCase.testSuite.project.getPropertyValue("counter"))
+</soapenv:Envelope>]]></con:request><con:assertion type="SOAP Response" id="f36b59e5-eb2f-45c0-b282-06fa08a895b7"/><con:assertion type="Valid HTTP Status Codes" id="f415cc15-938c-480a-964d-ca1c152005aa" name="Valid HTTP Status Codes"><con:configuration><codes>${#Project#statusCode}</codes></con:configuration></con:assertion><con:assertion type="SOAP Fault Assertion" id="81a7456e-6021-4ff9-b2d1-65df9ead531c" name="Not SOAP Fault"/><con:assertion type="Simple Contains" id="eafe4d18-4095-46d7-be89-eaffd790475f" name="Contains"><con:configuration><token>${#Project#expectedText}</token><ignoreCase>false</ignoreCase><useRegEx>false</useRegEx></con:configuration></con:assertion><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig mustUnderstand="NONE" version="200508"/><con:wsrmConfig version="1.2"/></con:request></con:config></con:testStep><con:testStep type="groovy" name="nextStep" id="cc22628d-b427-4004-96bc-a4bbeb303f0d"><con:settings/><con:config><script>Integer arraySize = new Integer( testRunner.testCase.getPropertyValue("arraySize"))
+Integer counter = new Integer(testRunner.testCase.getPropertyValue("counter"))
 
 if (counter &lt; arraySize)
 {
 	counter += 1
-	testRunner.testCase.testSuite.project.setPropertyValue("counter", counter.toString())
-	testRunner.gotoStepByName("setUp")
-} else
-{
-	testRunner.testCase.testSuite.project.setPropertyValue("counter", new Integer(0).toString())
-} 
-
-/*
-Integer iteration = new Integer(testRunner.testCase.testSuite.project.getPropertyValue( "counter" ));
-Integer iterationsCount = new Integer(testRunner.testCase.testSuite.project.getPropertyValue( "arraySize" ));
-
-if (iteration &lt;= iterationsCount - 1)
-{
-	iteration += 1
-	testRunner.testCase.testSuite.project.setPropertyValue("counter", iteration.toString())
-	testRunner.gotoStepByName( "Set test data")
-} */</script></con:config></con:testStep><con:properties/></con:testCase><con:properties/><con:setupScript/></con:testSuite><con:testSuite id="03f2032d-73c1-44c1-a5f7-607872097c8b" name="CheckTextsTestSuite"><con:settings/><con:runType>SEQUENTIAL</con:runType><con:testCase id="99164392-9895-4c13-a622-8db5e1f6e13c" failOnError="true" failTestCaseOnErrors="true" keepSession="false" maxResults="0" name="NumbersTestCase" searchProperties="true"><con:settings/><con:testStep type="groovy" name="setUp" id="51409de3-b3e8-4479-bf66-ea6d739f4de5"><con:settings/><con:config><script>String[] testArray = ["12345 324 43", "hello123 world nice2meetyou", "123hello pizza"]
+	testRunner.testCase.setPropertyValue("counter", counter.toString())
+	testRunner.gotoStepByName("setTestData")
+} </script></con:config></con:testStep><con:setupScript>testRunner.testCase.setPropertyValue("counter", "0") </con:setupScript><con:tearDownScript>testRunner.testCase.setPropertyValue("counter", "0") </con:tearDownScript><con:properties><con:property><con:name>counter</con:name><con:value>0</con:value></con:property><con:property><con:name>arraySize</con:name><con:value>4</con:value></con:property><con:property><con:name>testText</con:name><con:value>rusia</con:value></con:property><con:property><con:name>expectedText</con:name><con:value>Russia</con:value></con:property></con:properties></con:testCase><con:properties/><con:setupScript/></con:testSuite><con:testSuite id="03f2032d-73c1-44c1-a5f7-607872097c8b" name="CheckTextsTestSuite"><con:settings/><con:runType>SEQUENTIAL</con:runType><con:testCase id="99164392-9895-4c13-a622-8db5e1f6e13c" failOnError="true" failTestCaseOnErrors="true" keepSession="false" maxResults="0" name="NumbersTestCase" searchProperties="true" timeout="0" wsrmEnabled="false" wsrmVersion="1.0" wsrmAckTo="" amfAuthorisation="false" amfEndpoint="" amfLogin="" amfPassword=""><con:settings/><con:testStep type="groovy" name="setTestData" id="51409de3-b3e8-4479-bf66-ea6d739f4de5"><con:settings/><con:config><script>String[] testArray = ["12345 324 43", "hello123 world nice2meetyou", "123hello pizza"]
 String[] expectedArray = ["&lt;SpellResult/>", "hello 123", "123 hello"]
 Integer arraySize = new Integer( testArray.size())
-testRunner.testCase.testSuite.project.setPropertyValue("arraySize", arraySize.toString())
-Integer counter = new Integer(testRunner.testCase.testSuite.project.getPropertyValue("counter"))
+testRunner.testCase.setPropertyValue("arraySize", arraySize.toString())
+Integer counter = new Integer(testRunner.testCase.getPropertyValue("counter"))
 
-testRunner.testCase.testSuite.project.setPropertyValue("testText", testArray[counter]) 
-testRunner.testCase.testSuite.project.setPropertyValue("expectedText", expectedArray[counter]) 
-
-/*
-Integer iteration = new Integer(testRunner.testCase.testSuite.project.getPropertyValue( "counter" ));
-Integer iterationsCount = new Integer(testRunner.testCase.testSuite.project.getPropertyValue( "arraySize" ));
-
-//String [] expectedVals = new String [iterationsCount];
-String [] inputVals = new String[iterationsCount]
-
-inputVals[0]			= "te1231xt'" ;
-//expectedVals[0] 	= "";
-
-inputVals[1]			= "ice1231d" ;
-//expectedVals[1] 	= "";
-
-inputVals[2]			= "'wor123dss" ;
-//expectedVals[2] 	= "";
-
-
-testRunner.testCase.testSuite.project.setPropertyValue( 'testText', inputVals[iteration - 1]);
-*/
-
-</script></con:config></con:testStep><con:testStep type="request" id="634f1310-642c-4e66-918a-82750605c9c3" name="checkTexts"><con:settings/><con:config xsi:type="con:RequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:interface>SpellServiceSoap</con:interface><con:operation>checkTexts</con:operation><con:request name="checkTexts" id="a8e7a2c8-73c2-4acd-b3ca-484bd3f0cf92"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:encoding>UTF-8</con:encoding><con:endpoint>http://speller.yandex.net/services/spellservice</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:spel="http://speller.yandex.net/services/spellservice">\r
+if(counter >= arraySize) 
+{
+	testRunner.gotoStepByName("nextStep")
+} else
+{
+testRunner.testCase.setPropertyValue("testText", testArray[counter]) 
+testRunner.testCase.setPropertyValue("expectedText", expectedArray[counter]) 
+}</script></con:config></con:testStep><con:testStep type="request" id="634f1310-642c-4e66-918a-82750605c9c3" name="checkTexts"><con:settings/><con:config xsi:type="con:RequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:interface>SpellServiceSoap</con:interface><con:operation>checkTexts</con:operation><con:request name="checkTexts" id="a8e7a2c8-73c2-4acd-b3ca-484bd3f0cf92"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:encoding>UTF-8</con:encoding><con:endpoint>http://speller.yandex.net/services/spellservice</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:spel="http://speller.yandex.net/services/spellservice">\r
    <soapenv:Header/>\r
    <soapenv:Body>\r
       <spel:CheckTextsRequest lang="${#Project#lang}" options="0" format="">\r
          <!--Zero or more repetitions:-->\r
-         <spel:text>${#Project#testText}</spel:text>\r
+         <spel:text>${#TestCase#testText}</spel:text>\r
       </spel:CheckTextsRequest>\r
    </soapenv:Body>\r
-</soapenv:Envelope>]]></con:request><con:assertion type="Simple Contains" id="bdd166af-6b76-4f02-8e5c-2977606cfecb" name="Contains"><con:configuration><token>${#Project#expectedText}</token><ignoreCase>false</ignoreCase><useRegEx>false</useRegEx></con:configuration></con:assertion><con:assertion type="SOAP Fault Assertion" id="a3465e69-ab85-4d74-a824-3337df85c439" name="Not SOAP Fault"/><con:assertion type="Valid HTTP Status Codes" id="1fa952d8-2b37-4f62-9ca7-2ca9addaf88b" name="Valid HTTP Status Codes"><con:configuration><codes>200</codes></con:configuration></con:assertion><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig action="http://speller.yandex.net/services/spellservice/checkTexts" mustUnderstand="NONE" version="200508"/><con:wsrmConfig version="1.2"/></con:request></con:config></con:testStep><con:testStep type="groovy" name="tearDown" id="ea9f6a4c-d801-4b6b-85f4-1e86d5cfb1d1"><con:settings/><con:config><script>Integer arraySize = new Integer( testRunner.testCase.testSuite.project.getPropertyValue("arraySize"))
-Integer counter = new Integer(testRunner.testCase.testSuite.project.getPropertyValue("counter"))
+</soapenv:Envelope>]]></con:request><con:assertion type="Simple Contains" id="bdd166af-6b76-4f02-8e5c-2977606cfecb" name="Contains"><con:configuration><token>${#Project#expectedText}</token><ignoreCase>false</ignoreCase><useRegEx>false</useRegEx></con:configuration></con:assertion><con:assertion type="SOAP Fault Assertion" id="a3465e69-ab85-4d74-a824-3337df85c439" name="Not SOAP Fault"/><con:assertion type="Valid HTTP Status Codes" id="1fa952d8-2b37-4f62-9ca7-2ca9addaf88b" name="Valid HTTP Status Codes"><con:configuration><codes>${#Project#statusCode}</codes></con:configuration></con:assertion><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig action="http://speller.yandex.net/services/spellservice/checkTexts" mustUnderstand="NONE" version="200508"/><con:wsrmConfig version="1.2"/></con:request></con:config></con:testStep><con:testStep type="groovy" name="nextStep" id="ea9f6a4c-d801-4b6b-85f4-1e86d5cfb1d1"><con:settings/><con:config><script>Integer arraySize = new Integer( testRunner.testCase.getPropertyValue("arraySize"))
+Integer counter = new Integer(testRunner.testCase.getPropertyValue("counter"))
 
 if (counter &lt; arraySize)
 {
 	counter += 1
-	testRunner.testCase.testSuite.project.setPropertyValue("counter", counter.toString())
-	testRunner.gotoStepByName("setUp")
-} else
-{
-	testRunner.testCase.testSuite.project.setPropertyValue("counter", new Integer(0).toString())
-} 
-
-/*
-Integer iteration = new Integer(testRunner.testCase.testSuite.project.getPropertyValue( "counter" ));
-Integer iterationsCount = new Integer(testRunner.testCase.testSuite.project.getPropertyValue( "arraySize" ));
-
-if (iteration &lt;= iterationsCount - 1)
-{
-	iteration += 1
-	testRunner.testCase.testSuite.project.setPropertyValue("counter", iteration.toString())
-	testRunner.gotoStepByName( "Set test data")
-} */</script></con:config></con:testStep><con:properties/></con:testCase><con:testCase id="22c056ea-d9df-456f-bb89-b25bada5f9cd" failOnError="true" failTestCaseOnErrors="true" keepSession="false" maxResults="0" name="EmptyStringTestCase" searchProperties="true"><con:settings/><con:testStep type="request" id="6a0173c5-40d6-467b-8bed-9003054ca11c" name="checkTexts"><con:settings/><con:config xsi:type="con:RequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:interface>SpellServiceSoap</con:interface><con:operation>checkTexts</con:operation><con:request name="checkTexts" id="a8e7a2c8-73c2-4acd-b3ca-484bd3f0cf92"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:encoding>UTF-8</con:encoding><con:endpoint>http://speller.yandex.net/services/spellservice</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:spel="http://speller.yandex.net/services/spellservice">\r
+	testRunner.testCase.setPropertyValue("counter", counter.toString())
+	testRunner.gotoStepByName("setTestData")
+} </script></con:config></con:testStep><con:setupScript>testRunner.testCase.setPropertyValue("counter", "0") </con:setupScript><con:tearDownScript>testRunner.testCase.setPropertyValue("counter", "0") </con:tearDownScript><con:properties><con:property><con:name>counter</con:name><con:value>0</con:value></con:property><con:property><con:name>arraySize</con:name><con:value>3</con:value></con:property><con:property><con:name>testText</con:name><con:value>123hello pizza</con:value></con:property><con:property><con:name>expectedText</con:name><con:value>123 hello</con:value></con:property></con:properties></con:testCase><con:testCase id="22c056ea-d9df-456f-bb89-b25bada5f9cd" failOnError="true" failTestCaseOnErrors="true" keepSession="false" maxResults="0" name="EmptyStringTestCase" searchProperties="true" timeout="0" wsrmEnabled="false" wsrmVersion="1.0" wsrmAckTo="" amfAuthorisation="false" amfEndpoint="" amfLogin="" amfPassword=""><con:settings/><con:testStep type="request" id="6a0173c5-40d6-467b-8bed-9003054ca11c" name="checkTexts"><con:settings/><con:config xsi:type="con:RequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:interface>SpellServiceSoap</con:interface><con:operation>checkTexts</con:operation><con:request name="checkTexts" id="a8e7a2c8-73c2-4acd-b3ca-484bd3f0cf92"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:encoding>UTF-8</con:encoding><con:endpoint>http://speller.yandex.net/services/spellservice</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:spel="http://speller.yandex.net/services/spellservice">\r
    <soapenv:Header/>\r
    <soapenv:Body>\r
       <spel:CheckTextsRequest lang="${#Project#lang}" options="0" format="">\r
@@ -389,120 +270,61 @@ if (iteration &lt;= iterationsCount - 1)
          <spel:text></spel:text>\r
       </spel:CheckTextsRequest>\r
    </soapenv:Body>\r
-</soapenv:Envelope>]]></con:request><con:assertion type="Simple NotContains" id="75d4a9c9-c9b7-4d7f-b7e2-08c84ebb4711" name="Not Contains"><con:configuration><token>&lt;word></token><ignoreCase>false</ignoreCase><useRegEx>false</useRegEx></con:configuration></con:assertion><con:assertion type="SOAP Fault Assertion" id="f3d9be90-71b9-45ea-a00e-bec0f6c200ff" name="Not SOAP Fault"/><con:assertion type="Valid HTTP Status Codes" id="4f107b66-8c4b-4c09-bdbe-e38cd5de8d48" name="Valid HTTP Status Codes"><con:configuration><codes>200</codes></con:configuration></con:assertion><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig action="http://speller.yandex.net/services/spellservice/checkTexts" mustUnderstand="NONE" version="200508"/><con:wsrmConfig version="1.2"/></con:request></con:config></con:testStep><con:properties/></con:testCase><con:testCase id="cb3125f6-de1e-4b6c-8f1c-b8bb6f21135e" failOnError="true" failTestCaseOnErrors="true" keepSession="false" maxResults="0" name="CorrectWordsTestCase" searchProperties="true"><con:settings/><con:testStep type="groovy" name="setUp" id="23726704-e8c4-480e-8874-b161a12b2a0f"><con:settings/><con:config><script>String[] testArray = ["hello world", "London is the capital of Great Britain", "I'll be there"]
+</soapenv:Envelope>]]></con:request><con:assertion type="Simple NotContains" id="75d4a9c9-c9b7-4d7f-b7e2-08c84ebb4711" name="Not Contains"><con:configuration><token>&lt;word></token><ignoreCase>false</ignoreCase><useRegEx>false</useRegEx></con:configuration></con:assertion><con:assertion type="SOAP Fault Assertion" id="f3d9be90-71b9-45ea-a00e-bec0f6c200ff" name="Not SOAP Fault"/><con:assertion type="Valid HTTP Status Codes" id="4f107b66-8c4b-4c09-bdbe-e38cd5de8d48" name="Valid HTTP Status Codes"><con:configuration><codes>${#Project#statusCode}</codes></con:configuration></con:assertion><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig action="http://speller.yandex.net/services/spellservice/checkTexts" mustUnderstand="NONE" version="200508"/><con:wsrmConfig version="1.2"/></con:request></con:config></con:testStep><con:properties/></con:testCase><con:testCase id="cb3125f6-de1e-4b6c-8f1c-b8bb6f21135e" failOnError="true" failTestCaseOnErrors="false" keepSession="false" maxResults="0" name="CorrectWordsTestCase" searchProperties="true" timeout="0" wsrmEnabled="false" wsrmVersion="1.0" wsrmAckTo="" amfAuthorisation="false" amfEndpoint="" amfLogin="" amfPassword=""><con:settings/><con:testStep type="groovy" name="setTestData" id="23726704-e8c4-480e-8874-b161a12b2a0f"><con:settings/><con:config><script>String[] testArray = ["hello world", "London is the capital of Great Britain", "I'll be there"]
 Integer arraySize = new Integer( testArray.size())
-testRunner.testCase.testSuite.project.setPropertyValue("arraySize", arraySize.toString())
-Integer counter = new Integer(testRunner.testCase.testSuite.project.getPropertyValue("counter"))
+testRunner.testCase.setPropertyValue("arraySize", arraySize.toString())
+Integer counter = new Integer(testRunner.testCase.getPropertyValue("counter"))
 
-testRunner.testCase.testSuite.project.setPropertyValue("testText", testArray[counter])
-
-/*
-Integer iteration = new Integer(testRunner.testCase.testSuite.project.getPropertyValue( "counter" ));
-Integer iterationsCount = new Integer(testRunner.testCase.testSuite.project.getPropertyValue( "arraySize" ));
-
-//String [] expectedVals = new String [iterationsCount];
-String [] inputVals = new String[iterationsCount]
-
-inputVals[0]			= "te1231xt'" ;
-//expectedVals[0] 	= "";
-
-inputVals[1]			= "ice1231d" ;
-//expectedVals[1] 	= "";
-
-inputVals[2]			= "'wor123dss" ;
-//expectedVals[2] 	= "";
-
-
-testRunner.testCase.testSuite.project.setPropertyValue( 'testText', inputVals[iteration - 1]);
-*/
-
+if(counter >= arraySize) 
+{
+	testRunner.gotoStepByName("nextStep")
+} else
+{
+testRunner.testCase.setPropertyValue("testText", testArray[counter]) 
+}
 </script></con:config></con:testStep><con:testStep type="request" id="782e0bbc-6e2f-4a73-bdec-042fd021e6e5" name="checkTexts"><con:settings/><con:config xsi:type="con:RequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:interface>SpellServiceSoap</con:interface><con:operation>checkTexts</con:operation><con:request name="checkTexts" id="a8e7a2c8-73c2-4acd-b3ca-484bd3f0cf92"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:encoding>UTF-8</con:encoding><con:endpoint>http://speller.yandex.net/services/spellservice</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:spel="http://speller.yandex.net/services/spellservice">\r
    <soapenv:Header/>\r
    <soapenv:Body>\r
       <spel:CheckTextsRequest lang="${#Project#lang}" options="0" format="">\r
          <!--Zero or more repetitions:-->\r
-         <spel:text>${#Project#testText}</spel:text>\r
+         <spel:text>${#TestCase#testText}</spel:text>\r
       </spel:CheckTextsRequest>\r
    </soapenv:Body>\r
-</soapenv:Envelope>]]></con:request><con:assertion type="Simple Contains" id="8f800175-224f-4934-b3a1-94f1b89cada4" name="Contains"><con:configuration><token>&lt;SpellResult/></token><ignoreCase>false</ignoreCase><useRegEx>false</useRegEx></con:configuration></con:assertion><con:assertion type="Valid HTTP Status Codes" id="194a2110-7c7a-486e-b50b-220ec7868c51" name="Valid HTTP Status Codes"><con:configuration><codes>200</codes></con:configuration></con:assertion><con:assertion type="SOAP Fault Assertion" id="11b38be1-c248-4927-9cb9-d66824405814" name="Not SOAP Fault"/><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig action="http://speller.yandex.net/services/spellservice/checkTexts" mustUnderstand="NONE" version="200508"/><con:wsrmConfig version="1.2"/></con:request></con:config></con:testStep><con:testStep type="groovy" name="tearDown" id="2e03b6af-daca-4219-a145-221d3be86236"><con:settings/><con:config><script>Integer arraySize = new Integer( testRunner.testCase.testSuite.project.getPropertyValue("arraySize"))
-Integer counter = new Integer(testRunner.testCase.testSuite.project.getPropertyValue("counter"))
+</soapenv:Envelope>]]></con:request><con:assertion type="Simple Contains" id="8f800175-224f-4934-b3a1-94f1b89cada4" name="Contains"><con:configuration><token>&lt;SpellResult/></token><ignoreCase>false</ignoreCase><useRegEx>false</useRegEx></con:configuration></con:assertion><con:assertion type="Valid HTTP Status Codes" id="194a2110-7c7a-486e-b50b-220ec7868c51" name="Valid HTTP Status Codes"><con:configuration><codes>${#Project#statusCode}</codes></con:configuration></con:assertion><con:assertion type="SOAP Fault Assertion" id="11b38be1-c248-4927-9cb9-d66824405814" name="Not SOAP Fault"/><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig action="http://speller.yandex.net/services/spellservice/checkTexts" mustUnderstand="NONE" version="200508"/><con:wsrmConfig version="1.2"/></con:request></con:config></con:testStep><con:testStep type="groovy" name="nextStep" id="2e03b6af-daca-4219-a145-221d3be86236"><con:settings/><con:config><script>Integer arraySize = new Integer( testRunner.testCase.getPropertyValue("arraySize"))
+Integer counter = new Integer(testRunner.testCase.getPropertyValue("counter"))
 
 if (counter &lt; arraySize)
 {
 	counter += 1
-	testRunner.testCase.testSuite.project.setPropertyValue("counter", counter.toString())
-	testRunner.gotoStepByName("setUp")
-} else
-{
-	testRunner.testCase.testSuite.project.setPropertyValue("counter", new Integer(0).toString())
-} 
-
-/*
-Integer iteration = new Integer(testRunner.testCase.testSuite.project.getPropertyValue( "counter" ));
-Integer iterationsCount = new Integer(testRunner.testCase.testSuite.project.getPropertyValue( "arraySize" ));
-
-if (iteration &lt;= iterationsCount - 1)
-{
-	iteration += 1
-	testRunner.testCase.testSuite.project.setPropertyValue("counter", iteration.toString())
-	testRunner.gotoStepByName( "Set test data")
-} */</script></con:config></con:testStep><con:properties/></con:testCase><con:testCase id="c9dc87b4-2818-4805-82ba-e812ecf11760" failOnError="true" failTestCaseOnErrors="true" keepSession="false" maxResults="0" name="IncorrectWordsTestCase" searchProperties="true"><con:settings/><con:testStep type="groovy" name="setUp" id="57449d04-ec58-4db0-b5d3-9529d0d3170d"><con:settings/><con:config><script>String[] testArray = ["helo world", "london is the capitail of great britan", "i'll be there"]
+	testRunner.testCase.setPropertyValue("counter", counter.toString())
+	testRunner.gotoStepByName("setTestData")
+} </script></con:config></con:testStep><con:setupScript>testRunner.testCase.setPropertyValue("counter", "0") </con:setupScript><con:tearDownScript>testRunner.testCase.setPropertyValue("counter", "0") </con:tearDownScript><con:properties><con:property><con:name>counter</con:name><con:value>0</con:value></con:property><con:property><con:name>arraySize</con:name><con:value>3</con:value></con:property><con:property><con:name>testText</con:name><con:value>I'll be there</con:value></con:property></con:properties></con:testCase><con:testCase id="c9dc87b4-2818-4805-82ba-e812ecf11760" failOnError="true" failTestCaseOnErrors="false" keepSession="false" maxResults="0" name="IncorrectWordsTestCase" searchProperties="true" timeout="0" wsrmEnabled="false" wsrmVersion="1.0" wsrmAckTo="" amfAuthorisation="false" amfEndpoint="" amfLogin="" amfPassword=""><con:settings/><con:testStep type="groovy" name="setTestData" id="57449d04-ec58-4db0-b5d3-9529d0d3170d"><con:settings/><con:config><script>String[] testArray = ["helo world", "london is the capitail of great britan", "i'll be there"]
 String[] expectedArray = ["(?s).*hello.*", "(?s).*London.*capital.*Britain.*", "(?s).*I'll.*"]
 Integer arraySize = new Integer( testArray.size())
-testRunner.testCase.testSuite.project.setPropertyValue("arraySize", arraySize.toString())
-Integer counter = new Integer(testRunner.testCase.testSuite.project.getPropertyValue("counter"))
+testRunner.testCase.setPropertyValue("arraySize", arraySize.toString())
+Integer counter = new Integer(testRunner.testCase.getPropertyValue("counter"))
 
-testRunner.testCase.testSuite.project.setPropertyValue("testText", testArray[counter]) 
-testRunner.testCase.testSuite.project.setPropertyValue("expectedText", expectedArray[counter]) 
-
-/*
-Integer iteration = new Integer(testRunner.testCase.testSuite.project.getPropertyValue( "counter" ));
-Integer iterationsCount = new Integer(testRunner.testCase.testSuite.project.getPropertyValue( "arraySize" ));
-
-//String [] expectedVals = new String [iterationsCount];
-String [] inputVals = new String[iterationsCount]
-
-inputVals[0]			= "te1231xt'" ;
-//expectedVals[0] 	= "";
-
-inputVals[1]			= "ice1231d" ;
-//expectedVals[1] 	= "";
-
-inputVals[2]			= "'wor123dss" ;
-//expectedVals[2] 	= "";
-
-
-testRunner.testCase.testSuite.project.setPropertyValue( 'testText', inputVals[iteration - 1]);
-*/
-
-</script></con:config></con:testStep><con:testStep type="request" id="8fc25d9b-fcbd-48a5-8c1b-6df746981c11" name="checkTexts"><con:settings/><con:config xsi:type="con:RequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:interface>SpellServiceSoap</con:interface><con:operation>checkTexts</con:operation><con:request name="checkTexts" id="a8e7a2c8-73c2-4acd-b3ca-484bd3f0cf92"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:encoding>UTF-8</con:encoding><con:endpoint>http://speller.yandex.net/services/spellservice</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:spel="http://speller.yandex.net/services/spellservice">\r
+if(counter >= arraySize) 
+{
+	testRunner.gotoStepByName("nextStep")
+} else
+{
+testRunner.testCase.setPropertyValue("testText", testArray[counter]) 
+testRunner.testCase.setPropertyValue("expectedText", expectedArray[counter]) 
+}</script></con:config></con:testStep><con:testStep type="request" id="8fc25d9b-fcbd-48a5-8c1b-6df746981c11" name="checkTexts"><con:settings/><con:config xsi:type="con:RequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:interface>SpellServiceSoap</con:interface><con:operation>checkTexts</con:operation><con:request name="checkTexts" id="a8e7a2c8-73c2-4acd-b3ca-484bd3f0cf92"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:encoding>UTF-8</con:encoding><con:endpoint>http://speller.yandex.net/services/spellservice</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:spel="http://speller.yandex.net/services/spellservice">\r
    <soapenv:Header/>\r
    <soapenv:Body>\r
       <spel:CheckTextsRequest lang="${#Project#lang}" options="0" format="">\r
          <!--Zero or more repetitions:-->\r
-         <spel:text>${#Project#testText}</spel:text>\r
+         <spel:text>${#TestCase#testText}</spel:text>\r
       </spel:CheckTextsRequest>\r
    </soapenv:Body>\r
-</soapenv:Envelope>]]></con:request><con:assertion type="Simple Contains" id="8c0ac187-5bd8-400e-81d9-97617a1411df" name="Contains"><con:configuration><token>${#Project#expectedText}</token><ignoreCase>false</ignoreCase><useRegEx>true</useRegEx></con:configuration></con:assertion><con:assertion type="Valid HTTP Status Codes" id="b26b6e71-6e43-4f46-8411-aa4ce4d087f3" name="Valid HTTP Status Codes"><con:configuration><codes>200</codes></con:configuration></con:assertion><con:assertion type="SOAP Fault Assertion" id="4a799968-cc82-436f-a98b-5868284d8126" name="Not SOAP Fault"/><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig action="http://speller.yandex.net/services/spellservice/checkTexts" mustUnderstand="NONE" version="200508"/><con:wsrmConfig version="1.2"/></con:request></con:config></con:testStep><con:testStep type="groovy" name="tearDown" id="3e9fe43c-43d7-4c81-bd41-04a23c19197d"><con:settings/><con:config><script>Integer arraySize = new Integer( testRunner.testCase.testSuite.project.getPropertyValue("arraySize"))
-Integer counter = new Integer(testRunner.testCase.testSuite.project.getPropertyValue("counter"))
+</soapenv:Envelope>]]></con:request><con:assertion type="Simple Contains" id="8c0ac187-5bd8-400e-81d9-97617a1411df" name="Contains"><con:configuration><token>${#Project#expectedText}</token><ignoreCase>false</ignoreCase><useRegEx>true</useRegEx></con:configuration></con:assertion><con:assertion type="Valid HTTP Status Codes" id="b26b6e71-6e43-4f46-8411-aa4ce4d087f3" name="Valid HTTP Status Codes"><con:configuration><codes>${#Project#statusCode}</codes></con:configuration></con:assertion><con:assertion type="SOAP Fault Assertion" id="4a799968-cc82-436f-a98b-5868284d8126" name="Not SOAP Fault"/><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig action="http://speller.yandex.net/services/spellservice/checkTexts" mustUnderstand="NONE" version="200508"/><con:wsrmConfig version="1.2"/></con:request></con:config></con:testStep><con:testStep type="groovy" name="nextStep" id="3e9fe43c-43d7-4c81-bd41-04a23c19197d"><con:settings/><con:config><script>Integer arraySize = new Integer( testRunner.testCase.getPropertyValue("arraySize"))
+Integer counter = new Integer(testRunner.testCase.getPropertyValue("counter"))
 
 if (counter &lt; arraySize)
 {
 	counter += 1
-	testRunner.testCase.testSuite.project.setPropertyValue("counter", counter.toString())
-	testRunner.gotoStepByName("setUp")
-} else
-{
-	testRunner.testCase.testSuite.project.setPropertyValue("counter", new Integer(0).toString())
-} 
-
-/*
-Integer iteration = new Integer(testRunner.testCase.testSuite.project.getPropertyValue( "counter" ));
-Integer iterationsCount = new Integer(testRunner.testCase.testSuite.project.getPropertyValue( "arraySize" ));
-
-if (iteration &lt;= iterationsCount - 1)
-{
-	iteration += 1
-	testRunner.testCase.testSuite.project.setPropertyValue("counter", iteration.toString())
-	testRunner.gotoStepByName( "Set test data")
-} */</script></con:config></con:testStep><con:properties/></con:testCase><con:properties/></con:testSuite><con:properties><con:property><con:name>lang</con:name><con:value>en</con:value></con:property><con:property><con:name>testText</con:name><con:value>london is the capitail of great britan</con:value></con:property><con:property><con:name>counter</con:name><con:value>1</con:value></con:property><con:property><con:name>arraySize</con:name><con:value>3</con:value></con:property><con:property><con:name>expectedText</con:name><con:value>(?s).*London.*capital.*Britain.*</con:value></con:property></con:properties><con:wssContainer/><con:oAuth2ProfileContainer/><con:oAuth1ProfileContainer/><con:sensitiveInformation/></con:soapui-project>
+	testRunner.testCase.setPropertyValue("counter", counter.toString())
+	testRunner.gotoStepByName("setTestData")
+} </script></con:config></con:testStep><con:setupScript>testRunner.testCase.setPropertyValue("counter", "0") </con:setupScript><con:tearDownScript>testRunner.testCase.setPropertyValue("counter", "0") </con:tearDownScript><con:properties><con:property><con:name>counter</con:name><con:value>0</con:value></con:property><con:property><con:name>arraySize</con:name><con:value>3</con:value></con:property><con:property><con:name>testText</con:name><con:value>i'll be there</con:value></con:property><con:property><con:name>expectedText</con:name><con:value>(?s).*I'll.*</con:value></con:property></con:properties></con:testCase><con:properties/></con:testSuite><con:properties><con:property><con:name>lang</con:name><con:value>en</con:value></con:property><con:property><con:name>statusCode</con:name><con:value>200</con:value></con:property><con:property><con:name>counter</con:name><con:value>1</con:value></con:property></con:properties><con:wssContainer/><con:oAuth2ProfileContainer/><con:oAuth1ProfileContainer/><con:sensitiveInformation/></con:soapui-project>
